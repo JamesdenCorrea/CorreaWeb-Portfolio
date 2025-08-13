@@ -233,9 +233,8 @@ export default {
   methods: {
     fetchProjects() {
       this.loading = true
-      axios
-        .get('http://127.0.0.1:8000/api/projects')
-        .then(response => {
+axios.get(`${import.meta.env.VITE_API_URL}/projects`)
+.then(response => {
           this.projects = response.data
         })
         .catch(error => {
@@ -258,10 +257,10 @@ export default {
         return
       }
 
-      axios
-        .delete(`http://127.0.0.1:8000/api/projects/${id}`, {
-          headers: { 'X-ADMIN-TOKEN': token }
-        })
+axios.delete(`${import.meta.env.VITE_API_URL}/projects/${id}`, {
+    headers: { 'X-ADMIN-TOKEN': token }
+  })
+
         .then(() => {
           this.projects = this.projects.filter(p => p.id !== id)
           this.showSuccessNotification('Project deleted successfully!')
