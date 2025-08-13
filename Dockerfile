@@ -1,6 +1,7 @@
 # Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
+# Set working directory
 WORKDIR /var/www/html
 
 # Install system dependencies and PHP extensions required by Laravel
@@ -31,12 +32,12 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Run migrations automatically (uses Render env vars)
-RUN php artisan migrate --force
-RUN php artisan storage:link
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expose Apache port
 EXPOSE 80
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Use entrypoint to start container
+ENTRYPOINT ["docker-entrypoint.sh"]
