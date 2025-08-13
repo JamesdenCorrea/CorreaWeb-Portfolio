@@ -12,19 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            //
-            $table->json('screenshots')->nullable();
+            // Add 'screenshots' column only if it doesn't exist
+            if (!Schema::hasColumn('projects', 'screenshots')) {
+                $table->json('screenshots')->nullable();
+            }
         });
     }
 
     /**
      * Reverse the migrations.
      */
-public function down(): void
-{
-    Schema::table('projects', function (Blueprint $table) {
-        $table->dropColumn('screenshots');
-    });
-}
-
+    public function down(): void
+    {
+        Schema::table('projects', function (Blueprint $table) {
+            if (Schema::hasColumn('projects', 'screenshots')) {
+                $table->dropColumn('screenshots');
+            }
+        });
+    }
 };
