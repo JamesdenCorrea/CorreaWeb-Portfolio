@@ -4,5 +4,5 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: './', // ⚡ important for static hosting like Render
+  base: '/', // ⚡ absolute paths for Render static hosting
 })
