@@ -31,10 +31,7 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Generate app key
-RUN php artisan key:generate
-
-# Run migrations automatically
+# Run migrations automatically (uses Render env vars)
 RUN php artisan migrate --force
 RUN php artisan storage:link
 
