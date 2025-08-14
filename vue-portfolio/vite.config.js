@@ -5,4 +5,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   base: './', // ✅ use relative paths for static hosting (Render)
+  css: {
+    postcss: false, // ✅ Disable PostCSS processing
+  }
 })
